@@ -1,0 +1,65 @@
+#pulling ubuntu image
+sudo docker pull ubuntu
+
+#creating custom network
+sudo docker network create my-network
+sudo docker network ls
+
+#creating instances ubuntu-1 & ubuntu-2
+sudo docker run --net my-network -it -d -v /var/www/html:/www --name ubuntu1 -h ubuntu-1 ubuntu:latest
+
+sudo docker run --net my-network -it -d -v /var/www/html:/www --name ubuntu2 -h ubuntu-2 ubuntu:latest
+
+#creating custom network
+sudo docker network create my-network2
+sudo docker network ls
+
+#creating instances ubuntu-3 & ubuntu-4
+sudo docker run --net my-network2 -it -d --name ubuntu3 -h ubuntu-3 ubuntu:latest
+
+sudo docker run --net my-network2 -it -d --name ubuntu4 -h ubuntu-4 ubuntu:latest
+
+#for ubuntu-1
+sudo docker inspect ubuntu-1
+sudo docker exec -it ubuntu-1 bash
+sudo apt update
+sudo apt install net-tools
+sudo apt install iputils-ping
+hostname
+ifconfig -a
+ping -c 1 172.20.0.3
+ls /www
+
+#for ubuntu-2
+sudo docker inspect ubuntu-2
+sudo docker exec -it ubuntu-2 bash
+sudo apt update
+sudo apt install net-tools
+sudo apt install iputils-ping
+hostname
+ifconfig -a
+ping -c 1 172.20.0.2
+ls /www
+
+#for ubuntu-3
+sudo docker inspect ubuntu-3
+sudo docker exec -it ubuntu-3 bash
+sudo apt update
+sudo apt install net-tools
+sudo apt install iputils-ping
+hostname
+ifconfig -a
+ping -c 1 172.22.0.3
+ls /www
+
+#for ubuntu-4
+sudo docker inspect ubuntu-4
+sudo docker exec -it ubuntu-4 bash
+sudo apt update
+sudo apt install net-tools
+sudo apt install iputils-ping
+hostname
+ifconfig -a
+ping -c 1 172.22.0.2
+ls /www
+
