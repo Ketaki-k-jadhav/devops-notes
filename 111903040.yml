@@ -1,0 +1,36 @@
+  - name: "Ansible Assignment DevOps: 111903040"
+    hosts: all
+    become: yes
+    
+    vars:
+      myuser: "student"
+      mypassword: "student123"
+
+    tasks:
+    - name: "Add an user named student with password student123"
+      ansible.builtin.user: #using built-in user module
+        name: "{{ myuser }}"
+        state: present
+        password: "{{ mypassword | password_hash('sha512') }}"
+
+    - name: "Give the student sudo access only to /usr/bin/apt"
+      ansible.builtin.lineinfile: #using built-in line in file module
+        path: /etc/sudoers
+        line: "student  ALL=(ALL) NOPASSWD:/usr/bin/apt"
+
+    - name: "install package tree on the machine"
+      ansible.builtin.apt:  #using built-in apt module
+        name: "tree"
+        state: latest
+      register: ps
+    - debug: var=ps.stdout_lines
+    
+    - name: "List all the partitions on the machine"
+      ansible.builtin.command:  #using built-in command module
+        cmd: "lsblk"
+      register: ps
+    - debug: var=ps.stdout_lines
+    
+      
+
+    

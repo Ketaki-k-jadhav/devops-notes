@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+  namespace: testing-space
+  labels:
+    type: kubernetes-assignment2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: kubernetes-assignment2 
+  template:
+    metadata:
+      labels:
+        type: kubernetes-assignment2
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          resources:
+            limits:
+              cpu: "2"
+              memory: 8Mi
+          

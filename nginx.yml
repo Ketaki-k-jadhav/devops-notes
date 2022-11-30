@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: testing-space
+  labels:
+    type: kubernetes-assignment-2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: kubernetes-assignment-2 
+  template:
+    metadata:
+      labels:
+        type: kubernetes-assignment-2
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          resources:
+            limits:
+              cpu: "2"
+              memory: 8Mi
+          
